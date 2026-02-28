@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarvelVerse | Hackathon</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+
+body{
+  background: 
+    linear-gradient(rgba(0,0,0,0.85), rgba(20,0,0,0.75)),
+    url('https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&w=1920&q=80');
+    
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
+  color: white;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:#aa0000;border-radius:10px;}
+
+/* Loader */
+#loader{position:fixed;inset:0;background:black;display:flex;justify-content:center;align-items:center;z-index:9999;}
+#loader h1{color:#aa0000;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%{opacity:0.4}50%{opacity:1}100%{opacity:0.4}}
+
+/* Navbar */
+nav{position:fixed;top:0;width:100%;padding:15px 50px;background:rgba(0,0,0,0.95);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #aa0000;z-index:1000;}
+nav h1{color:#aa0000;letter-spacing:2px;}
+nav ul{display:flex;gap:25px;list-style:none;}
+nav li{cursor:pointer;transition:0.3s;}
+nav li:hover{color:#aa0000;}
+
+/* Hero */
+.hero{height:100vh;background:url('https://images.unsplash.com/photo-1608889175112-07b5d72c6fcb?auto=format&fit=crop&w=1920&q=80') center/cover;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;}
+.hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.8);}
+.hero-content{z-index:1;max-width:850px;}
+
+.hero h2{font-size:3.2rem;color:#aa0000;margin-bottom:15px;}
+
+.hero p{margin:15px 0;font-size:1.1rem;opacity:0.9;}
+
+.btn{padding:12px 32px;background:#aa0000;border:none;color:white;border-radius:25px;cursor:pointer;font-size:1rem;transition:0.3s;}
+.btn:hover{background:#7a0000;transform:scale(1.08);}
+
+/* Sections */
+section{padding:100px 80px;}
+.title{text-align:center;font-size:2.3rem;color:#aa0000;margin-bottom:60px;}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;}
+
+.card{
+  background:linear-gradient(145deg,#0c0c0c,#1b0000);
+  padding:30px;border-radius:18px;border:1px solid rgba(170,0,0,0.4);
+  transition:0.35s;cursor:pointer;text-align:center;
+}
+
+.card:hover{transform:translateY(-10px) scale(1.03);border-color:#aa0000;}
+.card h3{color:#cc0000;margin-bottom:10px;}
+
+/* Timeline */
+.timeline{display:flex;gap:35px;overflow-x:auto;padding-bottom:20px;}
+.event{min-width:200px;background:#120000;padding:18px;border-radius:14px;border:1px solid #aa0000;cursor:pointer;transition:0.3s;text-align:center;}
+.event:hover{transform:scale(1.08);}
+
+/* Modal */
+#modal{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;z-index:2000;}
+.modal-box{background:#0f0000;padding:35px;border-radius:18px;border:1px solid #aa0000;text-align:center;width:90%;max-width:520px;}
+.modal-box h2{color:#cc0000;margin-bottom:15px;}
+.modal-box p{opacity:0.9;}
+
+/* Footer */
+footer{background:black;padding:35px;text-align:center;border-top:1px solid #aa0000;}
+
+/* Animations */
+.fade{opacity:0;transform:translateY(35px);transition:1s;}
+.show{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:15px 20px;}
+  section{padding:80px 25px;}
+  .hero h2{font-size:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader"><h1>Loading MarvelVerse...</h1></div>
+
+<!-- Sounds -->
+<audio id="clickSound" src="c:\Users\Admin\Downloads\JARVIS START UP.mp3"></audio>
+<audio id="hoverSound" src="https://www.zedge.net/ringtones/bade8b87-0d4d-4f87-80e7-d887ce4dfb0b"></audio>
+<audio id="metalSound" src="https://www.soundjay.com/mechanical/sounds/metal-clank-01.mp3"></audio>
+<audio id="shieldSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<audio id="thunderSound" src="https://www.soundjay.com/nature/sounds/thunder-01.mp3"></audio>
+
+<!-- Navbar -->
+<nav>
+  <h1>MARVELVERSE</h1>
+  <ul>
+    <li onclick="scrollToSection('home')">Home</li>
+    <li onclick="scrollToSection('universe')">Universe</li>
+    <li onclick="scrollToSection('characters')">Characters</li>
+    <li onclick="scrollToSection('timeline')">Timeline</li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h2>ENTER THE MULTIVERSE</h2>
+    <p>Interactive Marvel Experience By Syntax</p>
+    <button class="btn" onclick="openModal('Welcome to MarvelVerse!','Start your heroic journey.')">Start Journey</button>
+  </div>
+</section>
+
+<!-- Universe -->
+<section id="universe">
+<h2 class="title fade">Marvel Universe</h2>
+<div class="grid">
+  <div class="card fade" onclick="openModal('Multiverse','Explore infinite realities')"><h3>Multiverse</h3></div>
+  <div class="card fade" onclick="openModal('Infinity Saga','Thanos vs Avengers')"><h3>Infinity Saga</h3></div>
+  <div class="card fade" onclick="openModal('Secret Wars','Reality collapse')"><h3>Secret Wars</h3></div>
+  <div class="card fade" onclick="openModal('Future Heroes','Next generation')"><h3>Future Heroes</h3></div>
+</div>
+</section>
+
+<!-- Characters -->
+<section id="characters">
+<h2 class="title fade">Top Characters</h2>
+<div class="grid">
+
+  <div class="card fade" onclick="heroClick('iron','Iron Man','I am Iron Man.')">
+    <h3>Iron Man</h3><p>Tech Legend</p>
+  </div>
+
+  <div class="card fade" onclick="heroClick('spider','Spider-Man','With great power comes great responsibility.')">
+    <h3>Spider-Man</h3><p>Street Hero</p>
+  </div>
+
+  <div class="card fade" onclick="heroClick('strange','Doctor Strange','We are in the endgame now.')">
+    <h3>Doctor Strange</h3><p>Sorcerer Supreme</p>
+  </div>
+
+  <div class="card fade" onclick="heroClick('witch','Scarlet Witch','You took everything from me.')">
+    <h3>Scarlet Witch</h3><p>Reality Bender</p>
+  </div>
+
+  <div class="card fade" onclick="heroClick('cap','Captain America','I can do this all day.')">
+    <h3>Captain America</h3><p>Shield Warrior</p>
+  </div>
+
+  <div class="card fade" onclick="heroClick('thor','Thor','Bring me Thanos!')">
+    <h3>Thor</h3><p>God of Thunder</p>
+  </div>
+
+</div>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+<h2 class="title fade">MCU Timeline</h2>
+<div class="timeline fade">
+  <div class="event" onclick="openModal('2008','Iron Man Released')">2008</div>
+  <div class="event" onclick="openModal('2012','Avengers Assemble')">2012</div>
+  <div class="event" onclick="openModal('2018','Infinity War')">2018</div>
+  <div class="event" onclick="openModal('2019','Endgame')">2019</div>
+  <div class="event" onclick="openModal('2025+','Multiverse Saga')">2025+</div>
+</div>
+</section>
+
+<!-- Modal -->
+<div id="modal">
+  <div class="modal-box">
+    <h2 id="modalTitle"></h2>
+    <p id="modalText"></p><br>
+    <button class="btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+<p>© 2026 MarvelVerse | Hackathon Project</p>
+<p>Built By Syntax</p>
+</footer>
+
+<script>
+/* Loader */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{document.getElementById('loader').style.display='none';},1200);
+});
+
+/* Sounds */
+const clickSound=document.getElementById('clickSound');
+const hoverSound=document.getElementById('hoverSound');
+const metalSound=document.getElementById('metalSound');
+const shieldSound=document.getElementById('shieldSound');
+const thunderSound=document.getElementById('thunderSound');
+
+document.querySelectorAll('button,li,.card,.event').forEach(el=>{
+  el.addEventListener('mouseenter',()=>hoverSound.play());
+  el.addEventListener('click',()=>clickSound.play());
+});
+
+/* Hero Click */
+function heroClick(hero,name,dialogue){
+
+  if(hero==='iron') metalSound.play();
+  if(hero==='cap') shieldSound.play();
+  if(hero==='thor') thunderSound.play();
+
+  openModal(name,dialogue);
+}
+
+/* Scroll */
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+/* Modal */
+function openModal(title,text){
+  document.getElementById('modal').style.display='flex';
+  document.getElementById('modalTitle').innerText=title;
+  document.getElementById('modalText').innerText=text;
+}
+
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+}
+
+/* Scroll Animation */
+const fades=document.querySelectorAll('.fade');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');}});
+},{threshold:0.2});
+
+fades.forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
